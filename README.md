@@ -113,7 +113,6 @@ Python · pandas · NumPy · scikit-learn · Matplotlib · Seaborn
 ## Autor
 
 **Franklin Manuel Manjarres**
-Matemático — Universidad del Valle
 Cali, Colombia
 
 [github.com/franklinmanjarres](https://github.com/franklinmanjarres)
