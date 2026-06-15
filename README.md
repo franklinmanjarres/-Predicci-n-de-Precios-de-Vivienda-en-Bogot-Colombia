@@ -180,8 +180,7 @@ prediccion-precios-vivienda-bogota-ml/
 
 - Incorporar más propiedades de estrato 5 y 6 para mejorar el desempeño del modelo en el segmento premium.
 - Incluir variables espaciales como distancia a estaciones de TransMilenio, parques e instituciones educativas.
-- Explorar modelos basados en árboles de gradiente como XGBoost y LightGBM.
-- Implementar técnicas de explicabilidad (SHAP) para analizar la contribución individual de cada variable.
+  
 
 ---
 
