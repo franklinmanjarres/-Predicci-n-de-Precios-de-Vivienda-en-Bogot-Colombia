@@ -18,7 +18,7 @@ st.set_page_config(
 # ============================================================
 # Título principal
 # ============================================================
-st.title("Predicción de Precios de Vivienda — Bogotá, Colombia")
+st.title("Predicción de Precios de Vivienda en Bogotá | Machine Learning")
 st.markdown(
     "Modelo de regresión entrenado con datos del mercado inmobiliario de Bogotá. "
     "Ingresa las características del apartamento para estimar su precio."
