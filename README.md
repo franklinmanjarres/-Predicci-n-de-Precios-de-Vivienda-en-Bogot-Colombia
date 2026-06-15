@@ -54,35 +54,43 @@ Carga de datos
       ↓
 Limpieza y preprocesamiento
       ↓
-Análisis Exploratorio (EDA)
+Imputación de valores faltantes
       ↓
-Selección de variables
-(Árbol de Decisión)
+Detección y eliminación de outliers
+      ↓
+Análisis Exploratorio de Datos (EDA)
+      ↓
+Selección de variables (Árbol de Clasificación)
       ↓
 Ingeniería de características
       ↓
-Codificación de variables
+Transformación logarítmica del precio (log1p)
+      ↓
+Codificación de variables categóricas
+      ↓
+Estandarización
       ↓
 División entrenamiento / prueba (75/25)
       ↓
 Validación Cruzada (K-Fold, 10 splits)
       ↓
-Entrenamiento de modelos
+Entrenamiento y comparación de modelos
       ↓
-Evaluación y análisis de residuos
+Análisis de residuos
       ↓
 Interpretación de coeficientes
+
 ```
 
 ---
 
 ## Modelos evaluados
 
-- Baseline (Mediana)
+- DummyRegressor (Baseline)
 - Regresión Lineal
 - Regresión Lineal Estandarizada
-- HuberRegressor
-- HuberRegressor Estandarizado
+- HuberRegressor sin estandarizar
+- HuberRegressor Estandarizado (modelo final)
 
 ---
 
@@ -146,6 +154,7 @@ El uso de `StandardScaler` resultó indispensable para garantizar la convergenci
 - Matplotlib
 - Seaborn
 - Streamlit
+- Jupyter Notebook
 
 ---
 
@@ -163,17 +172,7 @@ prediccion-precios-vivienda-bogota-ml/
 
 ---
 
-## Instalación
 
-```bash
-git clone https://github.com/franklinmanjarres/prediccion-precios-vivienda-bogota-ml.git
-
-cd prediccion-precios-vivienda-bogota-ml
-
-pip install -r requirements.txt
-
-streamlit run app.py
-```
 
 ---
 
@@ -189,14 +188,19 @@ streamlit run app.py
 ## Habilidades demostradas
 
 - Limpieza y preprocesamiento de datos.
+- Imputación de valores faltantes.
+- Detección y tratamiento de outliers.
 - Análisis Exploratorio de Datos (EDA).
 - Ingeniería de características.
-- Selección de variables.
+- Selección de variables mediante Árbol de Clasificación.
+- Codificación de variables categóricas.
+- Transformación logarítmica del target.
+- Estandarización de variables.
 - Validación Cruzada (K-Fold).
-- Modelos de regresión.
+- Modelos de regresión robusta.
 - Evaluación mediante MAE, RMSE y R².
-- Interpretación de resultados.
-- Visualización de datos.
+- Análisis de residuos.
+- Interpretación de coeficientes.
 - Desarrollo y despliegue de aplicaciones con Streamlit.
 
 ---
