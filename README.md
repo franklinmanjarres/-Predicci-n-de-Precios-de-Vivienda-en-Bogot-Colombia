@@ -1,111 +1,231 @@
 # Predicción de Precios de Vivienda en Bogotá | Machine Learning
 
-Modelo de regresión para estimar el precio de apartamentos en Bogotá a partir de características físicas, socioeconómicas y de ubicación. El proyecto cubre el pipeline completo de machine learning: limpieza de datos, análisis exploratorio, selección de variables, modelado con validación cruzada y análisis de residuos.
+Modelo de regresión para estimar el precio de apartamentos en Bogotá a partir de características físicas, socioeconómicas y de ubicación. El proyecto implementa un pipeline completo de Machine Learning, desde el preprocesamiento de datos hasta el despliegue de una aplicación interactiva con Streamlit.
+
+---
+
+## Demo
+
+**Aplicación interactiva (Streamlit):**
+
+🔗 https://fw2z7ovawqtfw6gwnytndv.streamlit.app
+
+---
+
+## Dashboard
+
+![Dashboard](images/dashboard.png)
 
 ---
 
 ## Descripción del problema
 
-El mercado inmobiliario en Colombia presenta una variable única a nivel mundial: el **estrato socioeconómico** (escala 1–6), que no solo refleja el nivel económico del sector sino también el acceso a servicios, seguridad y potencial de valorización. Este proyecto incorpora el estrato como predictor y analiza su impacto real sobre el precio de la vivienda en Bogotá.
+El mercado inmobiliario en Colombia presenta una característica única a nivel mundial: el **estrato socioeconómico** (escala 1–6), que influye en el acceso a servicios públicos, infraestructura, seguridad y valorización del sector.
 
-**Pregunta central:** ¿Qué variables determinan el precio de un apartamento en Bogotá y con qué precisión puede estimarse?
+Este proyecto incorpora el estrato como variable predictora para analizar su impacto sobre el precio de la vivienda en Bogotá mediante modelos de regresión.
+
+**Pregunta de investigación**
+
+> ¿Qué variables determinan el precio de un apartamento en Bogotá y con qué precisión puede estimarse mediante Machine Learning?
 
 ---
 
 ## Dataset
 
 | Característica | Detalle |
-|---|---|
+|----------------|---------|
 | Fuente | Mercado inmobiliario de Bogotá, Colombia |
 | Observaciones | 585 apartamentos |
 | Variables originales | 21 |
-| Variables del modelo | 16 (tras limpieza) |
-| Variable objetivo | Precio en pesos colombianos (COP) |
+| Variables finales | 16 |
+| Variable objetivo | Precio de venta (COP) |
 
-Variables principales: `área`, `estrato`, `habitaciones`, `baños`, `garajes`, `administración`, `antigüedad`, `barrio`, entre otras.
+Variables principales:
+
+- Área
+- Estrato
+- Habitaciones
+- Baños
+- Garajes
+- Administración
+- Antigüedad
+- Barrio
 
 ---
 
 ## Pipeline del proyecto
 
-```
+```text
 Carga de datos
-     ↓
+      ↓
 Limpieza y preprocesamiento
-     ↓
-Análisis exploratorio (EDA)
-     ↓
-Selección de variables (Árbol de Decisión)
-     ↓
+      ↓
+Análisis Exploratorio (EDA)
+      ↓
+Selección de variables
+(Árbol de Decisión)
+      ↓
 Ingeniería de características
-     ↓
-Codificación y partición 75/25
-     ↓
-Modelado con validación cruzada (KFold, 10 splits)
-     ↓
-Análisis de residuos
-     ↓
+      ↓
+Codificación de variables
+      ↓
+División entrenamiento / prueba (75/25)
+      ↓
+Validación Cruzada (K-Fold, 10 splits)
+      ↓
+Entrenamiento de modelos
+      ↓
+Evaluación y análisis de residuos
+      ↓
 Interpretación de coeficientes
 ```
+
+---
+
+## Modelos evaluados
+
+- Baseline (Mediana)
+- Regresión Lineal
+- Regresión Lineal Estandarizada
+- HuberRegressor
+- HuberRegressor Estandarizado
 
 ---
 
 ## Resultados
 
 | Modelo | MAE (M COP) | RMSE (M COP) |
-|---|---|---|
-| Baseline (mediana) | 105.2 | 140.5 |
+|---------|------------:|-------------:|
+| Baseline (Mediana) | 105.2 | 140.5 |
 | Regresión Lineal | 33.0 | 58.1 |
-| HuberRegressor sin estandarizar | diverge | diverge |
+| HuberRegressor sin estandarizar | Diverge | Diverge |
 | Regresión Lineal estandarizada | 33.0 | 58.1 |
 | **HuberRegressor estandarizado** | **34.2** | **62.7** |
 
-El modelo final reduce el error en un **67.5%** respecto al baseline. El error promedio de **$34.2M COP** sobre un precio mediano de **$218M COP** representa una precisión del 84%.
+El modelo final reduce el error de predicción en **67.5%** respecto al baseline.
+
+Con un precio mediano de **$218 millones COP**, el error promedio de **$34.2 millones COP** representa aproximadamente una precisión del **84%**.
+
+### Comparación del desempeño
+
+![Comparación de modelos](images/mae_modelos.png)
 
 ---
 
 ## Variables más influyentes
 
 | Variable | Coeficiente | Interpretación |
-|---|---|---|
-| `área` | +0.1688 | A mayor área, mayor precio |
-| `estrato` | +0.1600 | Variable exclusiva del sistema colombiano |
-| `garajes` | +0.0783 | Asociado a conjuntos de mayor categoría |
-| `administración` | +0.0702 | Refleja tamaño y amenidades del conjunto |
-| `antigüedad` | -0.0230 | A mayor antigüedad, menor precio |
-| `barrio_CIUDAD USME` | -0.0533 | Zona de menor valor en Bogotá |
+|-----------|------------:|---------------|
+| Área | +0.1688 | Mayor área incrementa el precio esperado |
+| Estrato | +0.1600 | Segundo predictor más importante del modelo |
+| Garajes | +0.0783 | Asociado a viviendas de mayor categoría |
+| Administración | +0.0702 | Refleja tamaño y amenidades del conjunto |
+| Antigüedad | -0.0230 | Reduce el precio esperado |
+| Barrio (Ciudad Usme) | -0.0533 | Zona con menor valorización relativa |
 
-**`área` y `estrato` dominan la predicción** — el estrato, exclusivo del contexto colombiano, es el segundo predictor más importante, superando incluso al número de habitaciones y baños.
+El **área** y el **estrato socioeconómico** constituyen las variables con mayor capacidad predictiva dentro del modelo.
+
+### Coeficientes del modelo
+
+![Coeficientes HuberRegressor](images/huber_coeficientes.png)
 
 ---
 
 ## Decisiones metodológicas
 
-**Transformación logarítmica del target**
-El precio presenta distribución asimétrica. Aplicar `log1p` antes del modelado y revertir con `expm1` al predecir mejora el ajuste del modelo.
+### Transformación logarítmica del objetivo
 
-**Árbol de Decisión como herramienta de selección**
-No es el modelo final — se usa con `max_depth=4` para identificar las variables numéricas más discriminantes respecto al precio antes del modelado de regresión.
+El precio presenta una distribución altamente asimétrica.
 
-**HuberRegressor como modelo final**
-Se elige sobre la Regresión Lineal por su robustez ante valores atípicos, característica importante en datos inmobiliarios donde existen propiedades con precios genuinamente extremos.
+Se aplicó la transformación **log1p()** durante el entrenamiento y posteriormente **expm1()** para recuperar la escala original de las predicciones.
 
-**Estandarización obligatoria**
-Sin `StandardScaler`, HuberRegressor presenta divergencia numérica (MAE > $400 billones COP). Este resultado queda documentado como lección metodológica.
+---
+
+### Selección de variables
+
+Se utilizó un **Árbol de Decisión** con profundidad máxima de 4 niveles para identificar las variables numéricas con mayor capacidad predictiva antes del modelado.
+
+---
+
+### Modelo final
+
+Aunque la Regresión Lineal obtuvo un desempeño ligeramente superior en MAE, el **HuberRegressor** fue seleccionado como modelo final por su mayor robustez frente a valores atípicos, frecuentes en el mercado inmobiliario.
+
+---
+
+### Estandarización
+
+El uso de **StandardScaler** resultó indispensable para garantizar la convergencia del algoritmo HuberRegressor.
+
+Sin estandarización, el modelo presentó errores extremadamente altos debido a problemas numéricos durante la optimización.
+
+---
+
+## Tecnologías utilizadas
+
+- Python
+- pandas
+- NumPy
+- scikit-learn
+- Matplotlib
+- Seaborn
+- Streamlit
+
+---
+
+## Estructura del proyecto
+
+```text
+prediccion-precios-vivienda-bogota-ml/
+│
+├── data/
+├── images/
+│   ├── dashboard.png
+│   ├── mae_modelos.png
+│   └── huber_coeficientes.png
+├── notebooks/
+├── app.py
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Instalación
+
+```bash
+git clone https://github.com/franklinmanjarres/prediccion-precios-vivienda-bogota-ml.git
+
+cd prediccion-precios-vivienda-bogota-ml
+
+pip install -r requirements.txt
+
+streamlit run app.py
+```
 
 ---
 
 ## Limitaciones y trabajo futuro
 
-- Incorporar más propiedades de estrato 5–6 para mejorar el desempeño 
-  en el segmento premium.
-- Agregar variables espaciales: distancia a estaciones de TransMilenio, 
-  parques e instituciones educativas.
+- Incorporar más propiedades de estrato 5 y 6 para mejorar el desempeño del modelo en el segmento premium.
+- Incluir variables espaciales como distancia a estaciones de TransMilenio, parques e instituciones educativas.
+- Explorar modelos basados en árboles de gradiente (XGBoost y LightGBM).
+- Implementar explicabilidad mediante SHAP para analizar la contribución individual de cada variable.
+
 ---
 
-## Stack tecnológico
+## Habilidades demostradas
 
-Python · pandas · NumPy · scikit-learn · Matplotlib · Seaborn
+- Limpieza y preprocesamiento de datos
+- Análisis Exploratorio de Datos (EDA)
+- Ingeniería de características
+- Selección de variables
+- Validación Cruzada (K-Fold)
+- Modelos de Regresión
+- Interpretación de coeficientes
+- Evaluación mediante MAE, RMSE 
+- Visualización de datos
+- Desarrollo y despliegue con Streamlit
 
 ---
 
@@ -113,8 +233,8 @@ Python · pandas · NumPy · scikit-learn · Matplotlib · Seaborn
 
 **Franklin Manuel Manjarres**
 
-Matemático | Data Scientist Junior | Machine Learning
+Matemático | Data Science | Machine Learning
 
-- GitHub: https://github.com/franklinmanjarres/-Predicci-n-de-Precios-de-Vivienda-en-Bogot-Colombia
-- Demo (Streamlit): https://fw2z7ovawqtfw6gwnytndv.streamlit.app
-- LinkedIn: https://www.linkedin.com/in/...
+- GitHub: https://github.com/franklinmanjarres
+- LinkedIn: https://www.linkedin.com/in/franklinmanjarres
+- Demo: https://fw2z7ovawqtfw6gwnytndv.streamlit.app
